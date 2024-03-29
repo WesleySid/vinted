@@ -15,7 +15,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-serv.get("/", (req, res) => {
+serv.get("https://lereacteur-vinted-api.herokuapp.com/offers", (req, res) => {
   try {
     return res.status(200).json("Bienvenue sur notre serveur Vinted");
   } catch (error) {
@@ -23,8 +23,8 @@ serv.get("/", (req, res) => {
   }
 });
 
-const userRoutes = require("./routes/user");
-const publishRoutes = require("./routes/publish");
+const userRoutes = require("./routes/User");
+const publishRoutes = require("./routes/Offer");
 serv.use(publishRoutes);
 serv.use(userRoutes);
 
@@ -32,6 +32,6 @@ serv.all("*", (req, res) => {
   return res.status(404).json("404 NOT FOUND");
 });
 
-serv.listen(process.env.PORT, () => {
-  console.log("Zé pardi 🤖");
+serv.listen(process.env.PORT || 3200, () => {
+  console.log("Zé pardi 🤖 ");
 });

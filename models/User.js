@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("User", {
   email: String,
-  account: { username: String, avatar: Object },
+  username: String,
   newsletter: Boolean,
   token: String,
   hash: String,
@@ -10,3 +10,5 @@ const User = mongoose.model("User", {
 });
 
 module.exports = User;
+
+//  account: { username: String, avatar: Object },

@@ -2,7 +2,7 @@ const express = require("express");
 const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload"); // Import du middleware express-fileupload
 const router = express.Router();
-const Publish = require("../models/Publish");
+const Offer = require("../models/Offer");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const convertToBase64 = require("../utils/convertToBase64");
 const User = require("../models/User");
@@ -23,7 +23,7 @@ router.post(
       );
       console.log(cloudResponse);
 
-      const responseObj = new Publish({
+      const responseObj = new Offer({
         product_name: title,
         product_description: description,
         product_price: price,
