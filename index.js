@@ -1,10 +1,11 @@
 const express = require("express");
-const fileUpload = require("express-fileupload");
+//const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const cors = require("cors");
 const serv = express();
 const mongoose = require("mongoose");
 serv.use(express.json());
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 serv.use(cors());
 const cloudinary = require("cloudinary").v2;
 mongoose.connect(process.env.MONGODB_URL);
@@ -20,6 +21,24 @@ serv.get("https://lereacteur-vinted-api.herokuapp.com/offers", (req, res) => {
     return res.status(200).json("Bienvenue sur notre serveur Vinted");
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+});
+
+serv.post("/payment", async (req, res) => {
+  try {
+    // On crée une intention de paiement
+    const paymentIntent = await stripe.paymentIntents.create({
+      // Montant de la transaction
+      amount: 2000,
+      // Devise de la transaction
+      currency: "usd",
+      // Description du produit
+      description: "La description du produit",
+    });
+    // On renvoie les informations de l'intention de paiement au client
+    res.json(paymentIntent);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
